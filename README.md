@@ -1,17 +1,36 @@
-# quote_of_the_day
+# CodeAlpha_Quote_of_the_day
 
-A new Flutter project.
+A minimal Flutter app that displays a random quote on launch and on demand.
 
-## Getting Started
+Built as **Task 2 — Random Quote Generator** for the CodeAlpha App Development internship.
 
-This project is a starting point for a Flutter application.
+## Features
 
-A few resources to get you started if this is your first Flutter project:
+- Shows a random quote every time the app opens
+- "New Quote" button fetches a different quote on each tap
+- Guard prevents the same quote appearing twice in a row
+- Smooth fade transition between quotes
+- Clean, minimal Material 3 UI
+- Author name displayed clearly beneath each quote
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## Tech
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Flutter (Android-only)
+- Dart
+- Material 3
+- No third-party packages, no network calls, no API keys
+
+## How to run
+
+bash:
+
+flutter pub get
+flutter run
+
+
+Project structure
+text
+lib/
+  screens/
+    home_screen.dart  
+  main.dart
