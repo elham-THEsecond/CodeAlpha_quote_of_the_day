@@ -1,54 +1,7 @@
 import 'dart:math';
-
+import 'dart:ui';
 import 'package:flutter/material.dart';
-
-const List<Map<String, String>> quotes = [
-  {
-    'text': 'The only way to do great work is to love what you do.',
-    'author': 'Steve Jobs',
-  },
-  {
-    'text': 'Life is what happens when you are busy making other plans.',
-    'author': 'John Lennon',
-  },
-  {
-    'text':
-        'The future belongs to those who believe in the beauty of their dreams.',
-    'author': 'Eleanor Roosevelt',
-  },
-  {
-    'text':
-        'It is during our darkest moments that we must focus to see the light.',
-    'author': 'Aristotle',
-  },
-  {
-    'text':
-        'Do not go where the path may lead, go instead where there is no path and leave a trail.',
-    'author': 'Ralph Waldo Emerson',
-  },
-  {
-    'text':
-        'The best time to plant a tree was 20 years ago. The second best time is now.',
-    'author': 'Chinese Proverb',
-  },
-  {
-    'text': 'Whether you think you can or you think you can\'t, you\'re right.',
-    'author': 'Henry Ford',
-  },
-  {
-    'text': 'The journey of a thousand miles begins with a single step.',
-    'author': 'Lao Tzu',
-  },
-  {
-    'text':
-        'Success is not final, failure is not fatal: it is the courage to continue that counts.',
-    'author': 'Winston Churchill',
-  },
-  {
-    'text': 'In the middle of difficulty lies opportunity.',
-    'author': 'Albert Einstein',
-  },
-];
+import 'package:quote_of_the_day/data/quotes.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -64,12 +17,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    // Pick a random starting quote when the screen first appears.
     _currentIndex = _random.nextInt(quotes.length);
   }
 
   void _newQuote() {
-    // Re-roll until we get a different index than the current one.
     int next;
     do {
       next = _random.nextInt(quotes.length);
@@ -80,81 +31,200 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final quote = quotes[_currentIndex];
-    final theme = Theme.of(context);
 
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Spacer(),
-              Text(
-                'Quote Of The Day',
-                style: theme.textTheme.titleMedium?.copyWith(
-                  color: theme.colorScheme.primary,
-                  letterSpacing: 1.2,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 28,
+      backgroundColor: const Color.fromARGB(255, 85, 78, 111),
+      body: Stack(
+        children: [
+          // Ambient background gradient
+          Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color.fromARGB(255, 153, 145, 197),
+                  Color.fromARGB(255, 65, 81, 89),
+                  Color.fromARGB(255, 35, 68, 97),
+                ],
+              ),
+            ),
+          ),
+
+          // Top-left glowing ambient light orb
+          Positioned(
+            top: 100,
+            left: -40,
+            child: ImageFiltered(
+              imageFilter: ImageFilter.blur(sigmaX: 90, sigmaY: 90),
+              child: Container(
+                width: 220,
+                height: 220,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: const Color.fromARGB(
+                    255,
+                    197,
+                    185,
+                    207,
+                  ).withOpacity(0.35),
                 ),
               ),
-              const Spacer(),
+            ),
+          ),
 
-              AnimatedSwitcher(
-                duration: const Duration(milliseconds: 350),
-                child: Card(
-                  key: ValueKey(_currentIndex),
-                  elevation: 0,
-                  color: theme.colorScheme.surfaceContainerHighest,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
+          // Bottom-right glowing ambient light orb
+          Positioned(
+            bottom: 140,
+            right: -40,
+            child: ImageFiltered(
+              imageFilter: ImageFilter.blur(sigmaX: 95, sigmaY: 95),
+              child: Container(
+                width: 240,
+                height: 240,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: const Color.fromARGB(
+                    255,
+                    163,
+                    198,
+                    231,
+                  ).withOpacity(0.35),
+                ),
+              ),
+            ),
+          ),
+
+          // Main Interactive Layer
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+              child: Column(
+                children: [
+                  const Spacer(),
+
+                  // Subdued, modern category header
+                  Text(
+                    'QUOTE OF THE DAY',
+                    style: TextStyle(
+                      color: Colors.white.withOpacity(0.7),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 3.5,
+                    ),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(28),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          quote['text']!,
-                          textAlign: TextAlign.center,
-                          style: theme.textTheme.headlineSmall?.copyWith(
-                            height: 1.4,
-                            fontWeight: FontWeight.w500,
+
+                  const Spacer(),
+
+                  // Frosted Glass Quote Card with dynamic animation
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 350),
+                    child: ClipRRect(
+                      key: ValueKey(_currentIndex),
+                      borderRadius: BorderRadius.circular(28),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
+                        child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 28,
+                            vertical: 36,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.06),
+                            borderRadius: BorderRadius.circular(28),
+                            border: Border.all(
+                              color: Colors.white.withOpacity(0.12),
+                              width: 1.2,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.3),
+                                blurRadius: 28,
+                                offset: const Offset(0, 14),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                quote['text']!,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  height: 1.5,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white,
+                                  letterSpacing: 0.2,
+                                ),
+                              ),
+                              const SizedBox(height: 24),
+                              Text(
+                                '— ${quote['author']}',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.white.withOpacity(0.65),
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        const SizedBox(height: 20),
-                        Text(
-                          '— ${quote['author']}',
-                          textAlign: TextAlign.center,
-                          style: theme.textTheme.bodyLarge?.copyWith(
-                            fontStyle: FontStyle.italic,
-                            color: theme.colorScheme.onSurfaceVariant,
-                          ),
+                      ),
+                    ),
+                  ),
+
+                  const Spacer(),
+
+                  // Modern Pill Refresh Button
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color.fromARGB(
+                            255,
+                            117,
+                            97,
+                            134,
+                          ).withOpacity(0.4),
+                          blurRadius: 18,
+                          offset: const Offset(0, 6),
                         ),
                       ],
                     ),
+                    child: FilledButton.icon(
+                      onPressed: _newQuote,
+                      icon: const Icon(Icons.refresh_rounded, size: 20),
+                      label: const Text('New Quote'),
+                      style: FilledButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(255, 2, 52, 73),
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 28,
+                          vertical: 16,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        textStyle: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
 
-              const Spacer(),
-              FilledButton.icon(
-                onPressed: _newQuote,
-                icon: Icon(Icons.refresh),
-                label: Text('New Quote'),
-                style: FilledButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-                  textStyle: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+                  const Spacer(),
+                ],
               ),
-              const Spacer(),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
