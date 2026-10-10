@@ -1,0 +1,99 @@
+{
+  "name": "Untitled blend",
+  "type": "flow",
+  "profile": "sRGB",
+  "dividers": [
+    0.25,
+    0.5,
+    0.75
+  ],
+  "soften": 0,
+  "noise": 2,
+  "speed": 15,
+  "stops": [
+    {
+      "name": "BLACK CURRENT",
+      "hex": "#12142E",
+      "rgb": [
+        18,
+        20,
+        46
+      ],
+      "oklch": [
+        0.2053,
+        0.0511,
+        277.6
+      ],
+      "cmyk": [
+        61,
+        57,
+        0,
+        82
+      ],
+      "position": 0.125
+    },
+    {
+      "name": "CLEAR HANADA",
+      "hex": "#4C3894",
+      "rgb": [
+        76,
+        56,
+        148
+      ],
+      "oklch": [
+        0.416,
+        0.1444,
+        288.5
+      ],
+      "cmyk": [
+        49,
+        62,
+        0,
+        42
+      ],
+      "position": 0.375
+    },
+    {
+      "name": "PLUM SMOKE",
+      "hex": "#B387E8",
+      "rgb": [
+        179,
+        135,
+        232
+      ],
+      "oklch": [
+        0.7036,
+        0.1441,
+        303.8
+      ],
+      "cmyk": [
+        23,
+        42,
+        0,
+        9
+      ],
+      "position": 0.625
+    },
+    {
+      "name": "PALE FUJI",
+      "hex": "#F6C6E2",
+      "rgb": [
+        246,
+        198,
+        226
+      ],
+      "oklch": [
+        0.8766,
+        0.0652,
+        342.7
+      ],
+      "cmyk": [
+        0,
+        20,
+        8,
+        4
+      ],
+      "position": 0.875
+    }
+  ]
+}
